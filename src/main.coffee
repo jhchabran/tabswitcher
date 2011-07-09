@@ -1,21 +1,21 @@
 #Backbone.Sync = Backbone.localSync
 
-Session = Backbone.Model.extend 
-  initialize: (name)->
-    set name:name
+window.Session = Backbone.Model.extend 
+  initialize: ->
+    @set name:""
 
   getName: ->
-    get 'name'
+    @get 'name'
 
   setName: (name)->
-    set name:name
+    @set name:name
 
-HomeView = Backbone.View.extend 
+window.HomeView = Backbone.View.extend 
   initialize: ->
     list = @$("ul")
     list.append $("<li>LOL</li>")
 
-Router = Backbone.Router.extend 
+window.Router = Backbone.Router.extend 
   routes:
     "" : "default"
 
@@ -24,6 +24,3 @@ Router = Backbone.Router.extend
     @homeView ?= new HomeView(el:'home')
     @homeView.render()
 
-$ -> 
-  router = new Router()
-  Backbone.history.start()
