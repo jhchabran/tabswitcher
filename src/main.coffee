@@ -13,14 +13,19 @@ window.Session = Backbone.Model.extend
 window.HomeView = Backbone.View.extend 
   initialize: ->
     list = @$("ul")
-    list.append $("<li>LOL</li>")
+    chrome.windows.getAll populate:true, (windows)-> 
+      _.each windows, (w)->
+        _.each w.tabs, (t)-> 
+          li = $("<li>" + t.url + "</li>")
+          list.append $(li)
+        
+      
 
 window.Router = Backbone.Router.extend 
   routes:
     "" : "default"
 
   default:->
-    console.log("Booyah")
     @homeView ?= new HomeView(el:'home')
     @homeView.render()
 
