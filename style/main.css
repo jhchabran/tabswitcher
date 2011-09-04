@@ -1,0 +1,26 @@
+#tabswitcher-overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(0,0,0,0.8);
+  -webkit-user-select: none;
+}
+
+#tabswitcher-overlay #box {
+  position: fixed;
+  left:100px;
+  top: 100px;
+  height: 300px;
+}
+
+#tabswitcher-overlay input {
+  -webkit-box-shadow: inset 0 3px 8px rgba(0,0,0,.4);
+  border: solid 1px #d2d2d2;
+  padding: 3px 5px;
+  background: #f1f1f1;
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ededed));
+  font: normal 30px/100% Arial, Helvetica, sans-serif;
+}
+
