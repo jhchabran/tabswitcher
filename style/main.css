@@ -12,7 +12,6 @@
   position: fixed;
   left:100px;
   top: 100px;
-  height: 300px;
 }
 
 #tabswitcher-overlay input {
@@ -23,4 +22,14 @@
   background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ededed));
   font: normal 30px/100% Arial, Helvetica, sans-serif;
 }
+#tabswitcher-overlay ul {
+  position: fixed;
+  left: 100px;
+  top: 150px;
+  background-color: white;
+}
 
+#tabswitcher-overlay ul li {
+  list-style-type: none;
+  font: normal 20px/100% Arial, Helvetica, sans-serif;
+}
