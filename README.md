@@ -10,7 +10,7 @@ It's mostly crappy code at this state :] !
 - Triggering it with Control-\ 
 - Jumping to the best match with Enter
 
-## 
+## TODO
 
 - Bind ESC to hide the UI
 - Get a decent fuzzy matcher algorithm
