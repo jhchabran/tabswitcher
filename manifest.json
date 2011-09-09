@@ -5,7 +5,7 @@
   "content_scripts": [
   {
     "matches": ["http://*/*", "https://*/*"],
-    "js": ["build/hook.js", "libs/zepto.js"],
+    "js": ["libs/zepto.js","build/hook.js"],
     "css": ["style/main.css"]
   }
   ],
