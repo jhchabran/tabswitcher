@@ -10,7 +10,6 @@ chrome.extension.onRequest.addListener (request, sender, sendResponse)->
           sendResponse(tabs:tabs)
       break
     when "switchTab"
-      console.log("switchTab")
       chrome.tabs.update(request.target.id, selected:true)
       sendResponse({})
       break
