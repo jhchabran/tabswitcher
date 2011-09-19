@@ -75,6 +75,7 @@ class TabSwitcher
 
   switchTab: (tab)->  
     chrome.extension.sendRequest(message:"switchTab", target:tab)
+    @overlayElement().hide()
 
   keyListener: (e)->
     if e.ctrlKey && e.keyCode 
