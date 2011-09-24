@@ -1,7 +1,7 @@
 {
-  "name": "Work Sessions",
+  "name": "TabSwitcher",
   "version": "0.1",
-  "description": "Manage task-related tabs in separate windows",
+  "description": "Switch to another tab easily",
   "content_scripts": [
   {
     "matches": ["http://*/*", "https://*/*"],
