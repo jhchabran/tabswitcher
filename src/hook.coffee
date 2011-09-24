@@ -43,12 +43,10 @@ class TabSwitcher
       matches = []
       offset = 0
       for i in [0..hint.length-1]
-        found = false
         for j in [offset..tab.url.length-1] 
           if hint.charAt(i) == tab.url.charAt(j)
             offset = j
             matches.push offset
-            found = true
             break
         break if j == tab.url.length - 1 and j != offset
       results.push tab if matches.length == hint.length
