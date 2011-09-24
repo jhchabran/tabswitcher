@@ -14,9 +14,10 @@ class TabSwitcher
 
     @overlayElement().find('input').keyup (event)=>
       if event.keyCode == 13
-        @switchTab @tabs[0]
+        @switchTab @candidates[0] if @candidates?
       else
-        @displayTabs @fuzzy(event.target.value)
+        @candidates = @fuzzy(event.target.value)
+        @switchTab @candidates
 
   show: ->
     @overlayElement().show()
@@ -34,45 +35,26 @@ class TabSwitcher
     for tab in tabs 
       ul.append("<li>#{tab.url}</li>")
 
-  # This algorithm is the most naive implementation you can find !
-  # 
-  # It doesn't care of the spaces between matches from the hint 
-  # which means he isn't very accurate compared to what you're used to.
-  #
-  # TODO : WRITE A DECENT FUZZY MATCHER FFS !
   fuzzy: (hint)->
     results = [] 
-    scores = {}
-
-    console.log "-#{hint}-"
-
-    compute_score = (text,hint)->
-      index = 0
-      score = 0
-      found = false
-
+    return @tabs if hint == ''
+    
+    for tab in @tabs 
+      matches = []
+      offset = 0
       for i in [0..hint.length-1]
-        for j in [index..text.length-1] 
-          if hint.charAt(i) == text.charAt(j)
-            score++
-            index = j
-            console.log "found #{hint.charAt(i)} in #{text} at #{j}"
+        found = false
+        for j in [offset..tab.url.length-1] 
+          if hint.charAt(i) == tab.url.charAt(j)
+            offset = j
+            matches.push offset
             found = true
             break
-        if found 
-          found = false
-        else 
-          console.log "can't find #{hint.charAt(i)} in #{text}"
-          break 
+        break if j == tab.url.length - 1 and j != offset
+      results.push tab if matches.length == hint.length
 
-      score
-
-    for tab in @tabs 
-      scores[tab.id] = compute_score tab.url[6..-1], hint
-
-    @tabs.sort (a,b)->
-      scores[b.id] - scores[a.id]
-
+    results 
+    
   switchTab: (tab)->  
     chrome.extension.sendRequest(message:"switchTab", target:tab)
     @hideOverlay()
