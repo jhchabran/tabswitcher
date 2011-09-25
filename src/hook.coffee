@@ -2,13 +2,6 @@ class TabSwitcher
   constructor: ->
     $('body').append("<div id='tabswitcher-overlay' style='display:none'></div>")
     $('#tabswitcher-overlay')
-      .css
-        position:'fixed',
-        width:'100%',
-        height:'100%',
-        top:0,
-        left:0,
-        background: 'rgba(0,0,0,0.8)'
       .append("<div id='box'> <input type='text'></input></div>")
       .append("<div id='results'></div>")
 
