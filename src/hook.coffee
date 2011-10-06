@@ -2,15 +2,14 @@ class TabSwitcher
   constructor: ->
     $('body').append("<div id='tabswitcher-overlay' style='display:none'></div>")
     $('#tabswitcher-overlay')
-      .append("<div id='box'> <input type='text'></input></div>")
-      .append("<div id='results'></div>")
+      .append("<div id='box'><input type='text'></input><div id='results'></div></div>")
 
     @overlayElement().find('input').keyup (event)=>
       if event.keyCode == 13
         @switchTab @candidates[0] if @candidates?
       else
         @candidates = @fuzzy(event.target.value)
-        @switchTab @candidates
+        @displayTabs @candidates
 
   show: ->
     @overlayElement().show()
@@ -23,7 +22,7 @@ class TabSwitcher
     @overlayElement().find('ul').remove()
     @overlayElement().find('#results').append '<ul></ul>'
 
-    ul = $('#tabswitcher-overlay #results ul')
+    ul = $('#tabswitcher-overlay #box #results ul')
 
     for tab in tabs 
       ul.append("<li>#{tab.url}</li>")
