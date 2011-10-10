@@ -7,7 +7,10 @@ fuzzy = (tabs, hint)->
   
   for tab in tabs 
     matches = []
-    offset = 0
+    
+    # Set offset to the first letter of the domain, ignoring procotol 
+    offset = tab.url.indexOf '/'
+
     for i in [0..hint.length-1]
       for j in [offset..tab.url.length-1] 
         if hint.charAt(i) == tab.url.charAt(j)
