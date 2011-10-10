@@ -32,11 +32,8 @@ class TabListView
     @element = element
 
   render: ->
-    console.log 'rendering'
     @element.empty()
-
-    for tabView in @tabViews
-      @element.append tabView.render()
+    for tabView in @tabViews then @element.append tabView.render()
 
   update: (tabs)->
     @tabViews = for tab in tabs then new TabView(tab)
