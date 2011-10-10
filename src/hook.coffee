@@ -1,5 +1,4 @@
 # fuzzy algorithm
-# TODO : add callbacks to highlight matches
 # TODO : weight differently occurences depending if they 
 #        are in domain, path or even GET parameters
 fuzzy = (tabs, hint)-> 
@@ -16,16 +15,27 @@ fuzzy = (tabs, hint)->
           matches.push offset
           break
       break if j == tab.url.length - 1 and j != offset
-    results.push tab if matches.length == hint.length
+    results.push {tab:tab, matches:matches} if matches.length == hint.length
 
   results 
 
 class TabView
-  constructor: (tab)->
+  constructor: (tab, matches)->
     @tab = tab
+    @matches = matches
 
   render: ->
-    "<li>#{@tab.url}</li>"
+    matchIndex = 0
+
+    html = '<li>'
+    for i in [0..@tab.url.length]
+      if @matches? and @matches[matchIndex] == i
+        html += "<b>#{@tab.url.charAt(i)}</b>"
+        matchIndex++
+      else
+        html += @tab.url.charAt(i)
+
+    html += '</li>'
 
 class TabListView
   constructor: (element) -> 
@@ -38,8 +48,8 @@ class TabListView
     @element().empty()
     for tabView in @tabViews then @element().append tabView.render()
 
-  update: (tabs)->
-    @tabViews = for tab in tabs then new TabView(tab)
+  update: (candidates)->
+    @tabViews = for candidate in candidates then new TabView(candidate.tab or candidate, candidate.matches)
     @render()
 
 class Application
@@ -60,10 +70,10 @@ class Application
   onInput: (event)->
     candidates = fuzzy(@tabs(), event.target.value)
 
-    @tabListView.update candidates
+    @tabListView.update candidates 
 
     if event.keyCode == 13
-      @switchTab candidates[0] if candidates?
+      @switchTab candidates[0].tab if candidates?
 
   hide: ->
     @element().hide()
