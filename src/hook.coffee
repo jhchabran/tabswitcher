@@ -29,11 +29,14 @@ class TabView
 
 class TabListView
   constructor: (element) -> 
-    @element = element
+    @element_ = element
+
+  element: ->
+    @element_
 
   render: ->
-    @element.empty()
-    for tabView in @tabViews then @element.append tabView.render()
+    @element().empty()
+    for tabView in @tabViews then @element().append tabView.render()
 
   update: (tabs)->
     @tabViews = for tab in tabs then new TabView(tab)
