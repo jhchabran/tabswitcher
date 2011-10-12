@@ -8,6 +8,11 @@
   -webkit-user-select: none;
 }
 
+#tabswitcher-overlay .favicon {
+  height:16px;
+  width:16px;
+}
+
 #tabswitcher-overlay #box {
   position: fixed;
   left:100px;

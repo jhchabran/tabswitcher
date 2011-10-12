@@ -31,6 +31,8 @@ class TabView
     matchIndex = 0
 
     html = '<li>'
+    html += "<img class='favicon' src='#{@tab.favIconUrl}'></img>" if @tab.favIconUrl?
+
     for i in [0..@tab.url.length]
       if @matches? and @matches[matchIndex] == i
         html += "<b>#{@tab.url.charAt(i)}</b>"
