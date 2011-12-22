@@ -1,7 +1,7 @@
 {
   "name": "TabSwitcher",
   "version": "0.1",
-  "description": "Switch to another tab easily",
+  "description": "Switch to another tab easily, like you would do in Textmate",
   "content_scripts": [
   {
     "matches": ["http://*/*", "https://*/*"],
