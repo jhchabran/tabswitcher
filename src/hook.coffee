@@ -23,9 +23,9 @@ fuzzy = (tabs, hint)->
   results 
 
 class TabView
-  constructor: (tab, matches)->
+  constructor: (tab, urlMatches, titleMatches)->
     @tab = tab
-    @matches = matches
+    @urlMatches = urlMatches
 
   render: ->
     matchIndex = 0
@@ -34,7 +34,7 @@ class TabView
     html += "<img class='favicon' src='#{@tab.favIconUrl}'></img>" if @tab.favIconUrl?
 
     for i in [0..@tab.url.length]
-      if @matches? and @matches[matchIndex] == i
+      if @urlMatches? and @urlMatches[matchIndex] == i
         html += "<b>#{@tab.url.charAt(i)}</b>"
         matchIndex++
       else
