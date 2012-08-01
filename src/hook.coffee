@@ -6,19 +6,34 @@ fuzzy = (tabs, hint)->
   return tabs if hint == ''
   
   for tab in tabs 
-    matches = []
+    urlMatches = []
+    titleMatches = []
     
     # Set offset to the first letter of the domain, ignoring procotol 
     offset = tab.url.indexOf '/'
 
     for i in [0..hint.length-1]
       for j in [offset..tab.url.length-1] 
-        if hint.charAt(i) == tab.url.charAt(j)
+        if hint.charAt(i).toLowerCase() == tab.url.charAt(j).toLowerCase()
           offset = j
-          matches.push offset
+          urlMatches.push offset
           break
       break if j == tab.url.length - 1 and j != offset
-    results.push {tab:tab, matches:matches} if matches.length == hint.length
+
+    offset = 0;
+    for i in [0..hint.length-1]
+      for j in [offset..tab.title.length-1] 
+        if hint.charAt(i).toLowerCase() == tab.title.charAt(j).toLowerCase()
+          offset = j
+          titleMatches.push offset
+          break
+      break if j == tab.title.length - 1 and j != offset
+
+    result = {tab:tab}
+    result.urlMatches   = urlMatches;
+    result.titleMatches = titleMatches;
+
+    results.push result if (urlMatches.length == hint.length || titleMatches.length == hint.length) 
 
   results 
 
@@ -26,6 +41,7 @@ class TabView
   constructor: (tab, urlMatches, titleMatches)->
     @tab = tab
     @urlMatches = urlMatches
+    @titleMatches = titleMatches
 
   render: ->
     matchIndex = 0
@@ -33,6 +49,15 @@ class TabView
     html = '<li>'
     html += "<img class='favicon' src='#{@tab.favIconUrl}'></img>" if @tab.favIconUrl?
 
+
+    for i in [0..@tab.title.length]
+      if @titleMatches? and @titleMatches[matchIndex] == i
+        html += "<b>#{@tab.title.charAt(i)}</b>"
+        matchIndex++
+      else
+        html += @tab.title.charAt(i)
+
+    matchIndex = 0
     for i in [0..@tab.url.length]
       if @urlMatches? and @urlMatches[matchIndex] == i
         html += "<b>#{@tab.url.charAt(i)}</b>"
@@ -54,7 +79,7 @@ class TabListView
     for tabView in @tabViews then @element().append tabView.render()
 
   update: (candidates)->
-    @tabViews = for candidate in candidates then new TabView(candidate.tab or candidate, candidate.matches)
+    @tabViews = for candidate in candidates then new TabView(candidate.tab or candidate, candidate.urlMatches,candidate.titleMatches)
     @render()
 
 class Application
