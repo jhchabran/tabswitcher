@@ -16,12 +16,14 @@
 
 #tabswitcher-overlay #box {
   position: fixed;
-  left:100px;
-  top: 100px;
+
   background-color: #DDD;
   -webkit-box-shadow: inset 0 3px 8px rgba(0,0,0,.4);
   border-radius: 15px;
   padding: 10px;
+  margin: 100px 50px 5000px 50px;
+  width: 100%;
+  padding : 30px;
 }
 
 #tabswitcher-overlay input {
@@ -39,4 +41,5 @@
 #tabswitcher-overlay ul li {
   list-style-type: none;
   font: normal 20px/100% Arial, Helvetica, sans-serif;
+  padding-top : 10px;
 }
