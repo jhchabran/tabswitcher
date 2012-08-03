@@ -49,14 +49,15 @@ class TabView
     html = '<li>'
     html += "<img class='favicon' src='#{@tab.favIconUrl}'></img>" if @tab.favIconUrl?
 
-
+    html+= '<span class="title">'
     for i in [0..@tab.title.length]
       if @titleMatches? and @titleMatches[matchIndex] == i
         html += "<b>#{@tab.title.charAt(i)}</b>"
         matchIndex++
       else
         html += @tab.title.charAt(i)
-
+    html+= '</span>'
+    html+= '<span class="url">'
     matchIndex = 0
     for i in [0..@tab.url.length]
       if @urlMatches? and @urlMatches[matchIndex] == i
@@ -64,7 +65,7 @@ class TabView
         matchIndex++
       else
         html += @tab.url.charAt(i)
-
+    html+= '</span><div class="both"></div>'
     html += '</li>'
 
 class TabListView
