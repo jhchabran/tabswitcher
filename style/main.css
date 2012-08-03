@@ -9,22 +9,24 @@
   z-index: 100;
 }
 
+#tabswitcher-overlay #box {
+  background-color: #DDD;
+  -webkit-box-shadow: inset 0 3px 8px rgba(0,0,0,.4);
+  border-radius: 15px;
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 50px;
+  padding : 20px;
+}
+
+
+
 #tabswitcher-overlay .favicon {
   height:16px;
   width:16px;
 }
 
-#tabswitcher-overlay #box {
-  position: fixed;
 
-  background-color: #DDD;
-  -webkit-box-shadow: inset 0 3px 8px rgba(0,0,0,.4);
-  border-radius: 15px;
-  padding: 10px;
-  margin: 100px 50px 5000px 50px;
-  width: 100%;
-  padding : 30px;
-}
 
 #tabswitcher-overlay input {
   -webkit-box-shadow: inset 0 3px 8px rgba(0,0,0,.4);
@@ -33,13 +35,31 @@
   background: #f1f1f1;
   background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ededed));
   font: normal 30px/100% Arial, Helvetica, sans-serif;
-  width:95%;
+  width:100%;
 }
 #tabswitcher-overlay ul {
+  padding : 0 20px 0 20px;
 }
 
 #tabswitcher-overlay ul li {
   list-style-type: none;
   font: normal 20px/100% Arial, Helvetica, sans-serif;
-  padding-top : 10px;
+  padding-top : 20px;
+  display : block;
+}
+
+.title {
+  color : black;
+}
+
+.url {
+  float : right;
+  font-style: italic;
+  color: #FFF;
+  text-shadow: black 1px 1px 4px
+}
+
+.both{
+  clear:both;
+  display:block;
 }
