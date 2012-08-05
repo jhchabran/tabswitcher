@@ -13,7 +13,6 @@ extension for Chrome, through a plugin.
 
 ## TODO
 
-- Get a shiny CSS 
 - Go to any match by clicking on it or navigating with arrows ( or ctrl-j / ctrl-k ? )
 - Get a config page to select an hotkey 
 
