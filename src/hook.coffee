@@ -20,7 +20,7 @@ fuzzy = (tabs, hint)->
           break
       break if j == tab.url.length - 1 and j != offset
 
-    offset = 0;
+    offset = 0
     for i in [0..hint.length-1]
       for j in [offset..tab.title.length-1] 
         if hint.charAt(i).toLowerCase() == tab.title.charAt(j).toLowerCase()
@@ -30,8 +30,8 @@ fuzzy = (tabs, hint)->
       break if j == tab.title.length - 1 and j != offset
 
     result = {tab:tab}
-    result.urlMatches   = urlMatches;
-    result.titleMatches = titleMatches;
+    result.urlMatches   = urlMatches
+    result.titleMatches = titleMatches
 
     results.push result if (urlMatches.length == hint.length || titleMatches.length == hint.length) 
 
