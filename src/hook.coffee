@@ -1,19 +1,19 @@
 # fuzzy algorithm
-# TODO : weight differently occurences depending if they 
+# TODO : weight differently occurences depending if they
 #        are in domain, path or even GET parameters
-fuzzy = (tabs, hint)-> 
-  results = [] 
+fuzzy = (tabs, hint)->
+  results = []
   return tabs if hint == ''
-  
-  for tab in tabs 
+
+  for tab in tabs
     urlMatches = []
     titleMatches = []
-    
-    # Set offset to the first letter of the domain, ignoring procotol 
+
+    # Set offset to the first letter of the domain, ignoring procotol
     offset = tab.url.indexOf '/'
 
     for i in [0..hint.length-1]
-      for j in [offset..tab.url.length-1] 
+      for j in [offset..tab.url.length-1]
         if hint.charAt(i).toLowerCase() == tab.url.charAt(j).toLowerCase()
           offset = j
           urlMatches.push offset
@@ -22,7 +22,7 @@ fuzzy = (tabs, hint)->
 
     offset = 0
     for i in [0..hint.length-1]
-      for j in [offset..tab.title.length-1] 
+      for j in [offset..tab.title.length-1]
         if hint.charAt(i).toLowerCase() == tab.title.charAt(j).toLowerCase()
           offset = j
           titleMatches.push offset
@@ -33,9 +33,9 @@ fuzzy = (tabs, hint)->
     result.urlMatches   = urlMatches
     result.titleMatches = titleMatches
 
-    results.push result if (urlMatches.length == hint.length || titleMatches.length == hint.length) 
+    results.push result if (urlMatches.length == hint.length || titleMatches.length == hint.length)
 
-  results 
+  results
 
 class TabView
   constructor: (tab, urlMatches, titleMatches)->
@@ -69,7 +69,7 @@ class TabView
     html += '</li>'
 
 class TabListView
-  constructor: (element) -> 
+  constructor: (element) ->
     @element_ = element
 
   element: ->
@@ -95,13 +95,13 @@ class Application
   element: ->
     @element_ ||= $('#tabswitcher-overlay')
 
-  tabs: -> 
+  tabs: ->
     @tabs_
 
   onInput: (event)->
     candidates = fuzzy(@tabs(), event.target.value)
 
-    @tabListView.update candidates 
+    @tabListView.update candidates
 
     if event.keyCode == 13
       @switchTab candidates[0].tab if candidates?
@@ -115,14 +115,14 @@ class Application
     @element().show()
     @element().find('input').focus()
 
-  switchTab: (tab)->  
+  switchTab: (tab)->
     @hide()
     chrome.extension.sendRequest(message:"switchTab", target:tab)
 
   hotKeyListener: (event)->
     if event.keyCode
       if event.ctrlKey && event.keyCode == 220 # Ctrl + \
-        chrome.extension.sendRequest {message: "getTabs"}, 
+        chrome.extension.sendRequest {message: "getTabs"},
           (response)=>
             @tabs_ = response.tabs
             @show()
@@ -132,11 +132,11 @@ class Application
 
   injectView: ->
     $('body').append("<div id='tabswitcher-overlay' style='display:none'></div>")
-    @element() 
+    @element()
       .append("<div id='box'><input type='text'></input><div id='results'><ul></ul></div></div>")
-    
 
-    
+
+
 
 app = new Application()
 
