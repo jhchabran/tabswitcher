@@ -9,6 +9,16 @@ OVERLAY_HTML= """
   </div>
 """
 
+SETTINGS_HTML= """
+  <div id='tabswitcher-settings' style="display:none">
+    <h1>Settings</h1>
+    <form id="tabswitcher-settings-form" action="#">
+      <label>Hotkey</label>
+      <input id="tabswitcher-settings-hotkey" type="text"/>
+    </form>
+  </div>
+"""
+
 Settings = 
   keyCode:220 # ctrl \
 
