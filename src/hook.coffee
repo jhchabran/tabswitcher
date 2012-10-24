@@ -1,3 +1,17 @@
+OVERLAY_HTML= """
+  <div id='tabswitcher-overlay' style="display:none">
+    <div id="box">
+      <input type="text"></input>
+      <div id="results">
+        <ul></ul>
+      </div>
+    </div>
+  </div>
+"""
+
+Settings = 
+  keyCode:220 # ctrl \
+
 # fuzzy algorithm
 # TODO : weight differently occurences depending if they
 #        are in domain, path or even GET parameters
@@ -121,7 +135,7 @@ class Application
 
   hotKeyListener: (event)->
     if event.keyCode
-      if event.ctrlKey && event.keyCode == 220 # Ctrl + \
+      if event.ctrlKey && event.keyCode == Settings.keyCode
         chrome.extension.sendRequest {message: "getTabs"},
           (response)=>
             @tabs_ = response.tabs
@@ -131,11 +145,7 @@ class Application
         @hide()
 
   injectView: ->
-    $('body').append("<div id='tabswitcher-overlay' style='display:none'></div>")
-    @element()
-      .append("<div id='box'><input type='text'></input><div id='results'><ul></ul></div></div>")
-
-
+    $('body').append(OVERLAY_HTML)
 
 
 app = new Application()
