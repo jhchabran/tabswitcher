@@ -1,15 +1,21 @@
 {
   "name": "TabSwitcher",
-  "version": "0.1",
+  "version": "0.2",
+  "manifest_version":2,
   "description": "Switch to another tab easily, like you would do in Textmate",
+  "browser_action": {
+    "default_title": "Tabswitcher",
+    "default_popup": "popup.html"
+  },
   "content_scripts": [
-  {
+    {
     "matches": ["http://*/*", "https://*/*"],
     "js": ["libs/zepto.js","build/hook.js"],
     "css": ["style/main.css"]
-  }
+    }
   ],
-  "background_page" : "background.html",
-  "permissions": ["tabs"]
+  "background": {
+    "scripts" : ["build/background.js"]
+  },
+  "permissions": ["tabs", "storage"]
 }
-
