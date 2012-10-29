@@ -1,21 +1,46 @@
 $ ->
-  $('input#tabswitcher-settings-hotkey-input').keypress (event)->
-    modifier = ""
+  chrome.storage.sync.get "config", (items)->
+    if items.config?
+      console.log items.config
+      $('#tabswitcher-settings-hotkey-char').text(items.config.keyCode) 
+      $('#tabswitcher-settings-hotkey-modifier').text(extractModifierFromEvent(items.config))
+    else
+      console.log "not found"
 
-    if event.ctrlKey
-      modifier += 'Ctrl '
 
-    if event.altKey
-      modifier += 'Alt '
+  $('input#tabswitcher-settings-hotkey-input').keydown (event)->
+    modifier = extractModifierFromEvent(event)
+    config = extractConfigFromEvent(event)
 
-    if event.metaKey
-      modifier += 'Cmd '
-
-    if event.shiftKey
-      modifier += 'Shift '
+    chrome.storage.sync.set config:config, ->
+      console.log "success"
 
     $('#tabswitcher-settings-hotkey-modifier').text(modifier)
     $('#tabswitcher-settings-hotkey-char').text(event.keyCode)
 
     false
+
+extractConfigFromEvent = (event)->
+  keyCode: event.keyCode
+  ctrlKey: event.ctrlKey
+  altKey:  event.altKey
+  metaKey: event.metaKey
+  shiftKey: event.shiftKey
+
+extractModifierFromEvent = (event)->
+  modifier = ""
+
+  if event.ctrlKey
+    modifier += 'Ctrl '
+
+  if event.altKey
+    modifier += 'Alt '
+
+  if event.metaKey
+    modifier += 'Cmd '
+
+  if event.shiftKey
+    modifier += 'Shift '
+
+  modifier
 

@@ -9,9 +9,6 @@ OVERLAY_HTML= """
   </div>
 """
 
-Settings = 
-  keyCode:220 # ctrl \
-
 # fuzzy algorithm
 # TODO : weight differently occurences depending if they
 #        are in domain, path or even GET parameters
@@ -98,7 +95,8 @@ class TabListView
     @render()
 
 class Application
-  constructor: ->
+  constructor: (config)->
+    @config_ = config
     @injectView()
 
     @element().find('input').keyup (event)=>
@@ -135,11 +133,10 @@ class Application
 
   hotKeyListener: (event)->
     if event.keyCode
-      if event.ctrlKey && event.keyCode == Settings.keyCode
-        chrome.extension.sendRequest {message: "getTabs"},
-          (response)=>
-            @tabs_ = response.tabs
-            @show()
+      if event.ctrlKey && event.keyCode == @config_.keyCode
+        chrome.extension.sendRequest message: "getTabs", (response)=>
+          @tabs_ = response.tabs
+          @show()
 
       else if event.keyCode == 27 # ESC
         @hide()
@@ -147,9 +144,11 @@ class Application
   injectView: ->
     $('body').append(OVERLAY_HTML)
 
+chrome.extension.sendRequest message:"requestConfig", (response)->
+  console.log "on"
 
-app = new Application()
+  app = new Application(response.config)
 
-window.addEventListener("keyup", (e)->
-  app.hotKeyListener(e)
-,false)
+  window.addEventListener("keyup", (e)->
+    app.hotKeyListener(e)
+  ,false)

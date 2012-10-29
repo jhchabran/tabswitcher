@@ -13,6 +13,10 @@ chrome.extension.onRequest.addListener (request, sender, sendResponse)->
       chrome.tabs.update(request.target.id, selected:true)
       sendResponse({})
       break
+    when "requestConfig"
+      chrome.storage.sync.get "config", (items)->
+        sendResponse(config:items.config)
+      break
     else
       sendResponse({})
 
