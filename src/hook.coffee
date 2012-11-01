@@ -131,9 +131,19 @@ class Application
     @hide()
     chrome.extension.sendRequest(message:"switchTab", target:tab)
 
+  isKeyboardEventMatching: (event)->
+    console.log event
+    console.log @config_
+
+    event.ctrlKey    == @config_.ctrlKey  &&
+      event.altKey   == @config_.altKey   &&
+      event.shiftKey == @config_.shiftKey &&
+      event.metaKey  == @config_.metaKey  &&
+      event.keyCode  == @config_.keyCode
+
   hotKeyListener: (event)->
-    if event.keyCode
-      if event.ctrlKey && event.keyCode == @config_.keyCode
+    if event.keyCode?
+      if @isKeyboardEventMatching(event)
         chrome.extension.sendRequest message: "getTabs", (response)=>
           @tabs_ = response.tabs
           @show()
@@ -145,8 +155,6 @@ class Application
     $('body').append(OVERLAY_HTML)
 
 chrome.extension.sendRequest message:"requestConfig", (response)->
-  console.log "on"
-
   app = new Application(response.config)
 
   window.addEventListener("keyup", (e)->
