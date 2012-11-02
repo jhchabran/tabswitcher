@@ -2,7 +2,7 @@ $ ->
   chrome.storage.sync.get "config", (items)->
     if items.config?
       console.log items.config
-      $('#tabswitcher-settings-hotkey-char').text(items.config.keyCode) 
+      $('#tabswitcher-settings-hotkey-char').text(String.fromCharCode(items.config.keyCode))
       $('#tabswitcher-settings-hotkey-modifier').text(extractModifierFromEvent(items.config))
     else
       console.log "not found"
@@ -16,7 +16,7 @@ $ ->
       console.log "success"
 
     $('#tabswitcher-settings-hotkey-modifier').text(modifier)
-    $('#tabswitcher-settings-hotkey-char').text(event.keyCode)
+    $('#tabswitcher-settings-hotkey-char').text(String.fromCharCode(event.keyCode))
 
     false
 
