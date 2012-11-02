@@ -1,15 +1,20 @@
 <html>
 <script type="text/javascript" src="libs/zepto.js"></script>
 <script type="text/javascript" src="build/popup.js"></script>
+<style> 
+  body {
+    background-color: #DDD;
+    padding: 20px;
+    border-radius: 15px;
+    font: normal 100% Arial, Helvetica, sans-serif;
+  }
+</style>
 <div id='tabswitcher-settings'>
-  <h1>Settings</h1>
+  <h1> Settings</h1>
   <form id="tabswitcher-settings-form" action="#">
+    Type the wanted here (you can use ctrl, alt, shift and cmd) :
     <label>Hotkey</label>
     <input id="tabswitcher-settings-hotkey-input" type="text"/>
   </form>
-  <div id="tabswitcher-settings-hotkey-display">
-    <span id="tabswitcher-settings-hotkey-modifier"></span>
-    <span id="tabswitcher-settings-hotkey-char"></span>
-  </div>
 </div>
 </html>

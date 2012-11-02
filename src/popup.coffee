@@ -1,24 +1,17 @@
 $ ->
   chrome.storage.sync.get "config", (items)->
     if items.config?
-      console.log items.config
-      $('#tabswitcher-settings-hotkey-char').text(String.fromCharCode(items.config.keyCode))
-      $('#tabswitcher-settings-hotkey-modifier').text(extractModifierFromEvent(items.config))
-    else
-      console.log "not found"
-
+      $('input#tabswitcher-settings-hotkey-input').val(convertToReadableHotkey(items.config))
 
   $('input#tabswitcher-settings-hotkey-input').keydown (event)->
-    modifier = extractModifierFromEvent(event)
-    config = extractConfigFromEvent(event)
+    chrome.storage.sync.set config:extractConfigFromEvent(event), -> null
 
-    chrome.storage.sync.set config:config, ->
-      console.log "success"
-
-    $('#tabswitcher-settings-hotkey-modifier').text(modifier)
-    $('#tabswitcher-settings-hotkey-char').text(String.fromCharCode(event.keyCode))
+    $('input#tabswitcher-settings-hotkey-input').val(convertToReadableHotkey(event))
 
     false
+
+convertToReadableHotkey = (event)->
+  "#{extractModifierFromEvent(event)}+ #{String.fromCharCode(event.keyCode)}"
 
 extractConfigFromEvent = (event)->
   keyCode: event.keyCode
