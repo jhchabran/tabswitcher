@@ -4,7 +4,10 @@ $ ->
       $('input#tabswitcher-settings-hotkey-input').val(convertToReadableHotkey(items.config))
 
   $('input#tabswitcher-settings-hotkey-input').keydown (event)->
-    chrome.storage.sync.set config:extractConfigFromEvent(event), -> null
+    unless event.keyCode == 27 # esc
+      chrome.storage.sync.set config:extractConfigFromEvent(event), -> null
+    else
+      window.close()
 
     $('input#tabswitcher-settings-hotkey-input').val(convertToReadableHotkey(event))
 
