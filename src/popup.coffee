@@ -8,6 +8,7 @@ $ ->
       chrome.storage.sync.set config:extractConfigFromEvent(event), -> null
     else
       window.close()
+      return
 
     $('input#tabswitcher-settings-hotkey-input').val(convertToReadableHotkey(event))
 
