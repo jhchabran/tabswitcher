@@ -68,7 +68,7 @@ class TabView
       else
         html += @tab.title.charAt(i)
     html+= '</span>'
-    html+= '<span class="url">'
+    html+= '<div class="url">'
     matchIndex = 0
     for i in [0..@tab.url.length]
       if @urlMatches? and @urlMatches[matchIndex] == i
@@ -76,7 +76,7 @@ class TabView
         matchIndex++
       else
         html += @tab.url.charAt(i)
-    html+= '</span><div class="both"></div>'
+    html+= '</div></div>'
     html += '</li>'
 
 class TabListView

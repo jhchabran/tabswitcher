@@ -10,40 +10,34 @@
 }
 
 #tabswitcher-overlay #box {
-  background-color: #DDD;
-  -webkit-box-shadow: inset 0 3px 8px rgba(0,0,0,.4);
-  border-radius: 15px;
-  width: 90%;
+  background-color: #F8F8F8;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.0980392) 0px 1px 1px 0px;
+  width: 80%;
   margin: 0 auto;
   margin-top: 50px;
   padding : 20px;
 }
-
-
 
 #tabswitcher-overlay .favicon {
   height:16px;
   width:16px;
 }
 
-
-
 #tabswitcher-overlay input {
-  -webkit-box-shadow: inset 0 3px 8px rgba(0,0,0,.4);
   border: solid 1px #d2d2d2;
   padding: 3px 5px;
-  background: #f1f1f1;
-  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ededed));
-  font: normal 30px/100% Arial, Helvetica, sans-serif;
+  background-color: #FFF;
+  font: normal 16px/100% Arial, Helvetica, sans-serif;
   width:100%;
 }
+
 #tabswitcher-overlay ul {
-  padding : 0 20px 0 20px;
+  padding : 0 10px 0 10px;
 }
 
 #tabswitcher-overlay ul li {
   list-style-type: none;
-  font: normal 20px/100% Arial, Helvetica, sans-serif;
+  font: normal 14px/100% Arial, Helvetica, sans-serif;
   padding-top : 20px;
   display : block;
 }
@@ -53,10 +47,8 @@
 }
 
 .url {
-  float : right;
-  font-style: italic;
-  color: #FFF;
-  text-shadow: black 1px 1px 4px
+  color: #999;
+  font-size:14px/100%;
 }
 
 .both{
