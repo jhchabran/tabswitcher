@@ -43,15 +43,17 @@
 }
 
 .title {
+  margin-left:5px;
   color : black;
 }
 
 .url {
+  margin-top:5px;
+  margin-left:10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow:hidden;
+  width:100%;
   color: #999;
   font-size:14px/100%;
-}
-
-.both{
-  clear:both;
-  display:block;
 }
