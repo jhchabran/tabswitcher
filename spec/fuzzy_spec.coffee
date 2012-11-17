@@ -36,26 +36,9 @@ describe "Fuzzy tab matcher", ->
       {url:"a__b_c" , hint:"abc" , score:2.5  , indexes:[0  , 3 , 5]} ,
     ]
 
-    # Jasmine seems to have an issue with nesting it blocks inside for loops
-    # the iterator doesn't change, until then here it is, unrolled.
+    for d in data
+      it "scores #{d.score} when matching '#{d.url}' with '#{d.hint}', indexes being [#{d.indexes}]", ->
+        r = f.match(d.url, d.hint)
 
-    hack = (i)->
-      r = f.match(data[i].url, data[i].hint)
-
-      expect(r.score).toEqual(data[i].score)
-      expect(r.indexes).toEqual(data[i].indexes)
-
-    it "scores #{data[0].score} when matching '#{data[0].url}' with '#{data[0].hint}', indexes being [#{data[0].indexes}]", ->
-      hack(0)
-    it "scores #{data[1].score} when matching '#{data[1].url}' with '#{data[1].hint}', indexes being [#{data[1].indexes}]", ->
-      hack(1)
-    it "scores #{data[2].score} when matching '#{data[2].url}' with '#{data[2].hint}', indexes being [#{data[2].indexes}]", ->
-      hack(2)
-    it "scores #{data[3].score} when matching '#{data[3].url}' with '#{data[3].hint}', indexes being [#{data[3].indexes}]", ->
-      hack(3)
-    it "scores #{data[4].score} when matching '#{data[4].url}' with '#{data[4].hint}', indexes being [#{data[4].indexes}]", ->
-      hack(4)
-    it "scores #{data[5].score} when matching '#{data[5].url}' with '#{data[5].hint}', indexes being [#{data[5].indexes}]", ->
-      hack(5)
-    it "scores #{data[6].score} when matching '#{data[6].url}' with '#{data[6].hint}', indexes being [#{data[6].indexes}]", ->
-      hack(6)
+        expect(r.score).toEqual(d.score)
+        expect(r.indexes).toEqual(d.indexes)
