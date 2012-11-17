@@ -9,9 +9,16 @@ OVERLAY_HTML= """
   </div>
 """
 
-removeProtocol = (url)->
-  offset = url.indexOf '/'
-  url[offset..url.length-1]
+
+fuzzyMatch = (string, abbrev)->
+  string = string.toLowerCase()
+  abbrev = abbrev.toLowerCase()
+
+  for string_idx in [0..string.length]
+    for abbrev_idx in [0..abbrev.length]
+      if string.charAt(string_idx) == abbrev.charAt(abbrev_idx)
+        distance = i - last_string_idx
+
 
 # TODO : weight differently occurences depending if they
 #        are in domain, path or even GET parameters

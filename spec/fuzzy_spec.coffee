@@ -12,10 +12,17 @@ describe "Fuzzy tab matcher", ->
     it "should not match against url's protocol", ->
       tabs = mock_tabs ["http://foo","http://h_t_t_p.com","http://github.com"]
 
-      result = f.sortByMatchingScore tabs, "http"
+      results = f.sortByMatchingScore tabs, "http"
 
-      expect(result[0].tab.url).toEqual(tabs[1].url)
+      expect(results[0].tab.url).toEqual(tabs[1].url)
+
+    tabs = mock_tabs ["axxbxxcxx", "axxbxcx", "axbxcx", "abc"]
 
     it "should sort tabs by their score", ->
-      throw "fail"
+      results = f.sortByMatchingScore tabs, "abc"
 
+      scores = []
+      for result in results
+        scores.push result.score
+
+      expect(scores).toEqual(scores.sort (a,b)-> b-a)
