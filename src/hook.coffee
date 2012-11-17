@@ -9,75 +9,42 @@ OVERLAY_HTML= """
   </div>
 """
 
-# fuzzy algorithm
+removeProtocol = (url)->
+  offset = url.indexOf '/'
+  url[offset..url.length-1]
+
 # TODO : weight differently occurences depending if they
 #        are in domain, path or even GET parameters
 fuzzy = (tabs, hint)->
   results = []
-  return tabs if hint == ''
 
   for tab in tabs
-    urlMatches = []
-    titleMatches = []
+    score = LiquidMetal.score(removeProtocol(tab.url), hint)
+    #console.log "#{tab.url}:#{score}"
+    results.push {tab:tab, score:score}
 
-    # Set offset to the first letter of the domain, ignoring procotol
-    offset = tab.url.indexOf '/'
+  results.sort (a,b)->
+    b.score - a.score
 
-    for i in [0..hint.length-1]
-      for j in [offset..tab.url.length-1]
-        if hint.charAt(i).toLowerCase() == tab.url.charAt(j).toLowerCase()
-          offset = j
-          urlMatches.push offset
-          break
-      break if j == tab.url.length - 1 and j != offset
-
-    offset = 0
-    for i in [0..hint.length-1]
-      for j in [offset..tab.title.length-1]
-        if hint.charAt(i).toLowerCase() == tab.title.charAt(j).toLowerCase()
-          offset = j
-          titleMatches.push offset
-          break
-      break if j == tab.title.length - 1 and j != offset
-
-    result = {tab:tab}
-    result.urlMatches   = urlMatches
-    result.titleMatches = titleMatches
-
-    results.push result if (urlMatches.length == hint.length || titleMatches.length == hint.length)
+  console.log results
 
   results
 
 class TabView
-  constructor: (tab, urlMatches, titleMatches)->
+  constructor: (tab)->
     @tab = tab
-    @urlMatches = urlMatches
-    @titleMatches = titleMatches
 
   render: ->
-    matchIndex = 0
-
     html = '<li>'
     html += "<img class='favicon' src='#{@tab.favIconUrl}'></img>" if @tab.favIconUrl?
 
     html+= '<span class="title">'
-    for i in [0..@tab.title.length]
-      if @titleMatches? and @titleMatches[matchIndex] == i
-        html += "<b>#{@tab.title.charAt(i)}</b>"
-        matchIndex++
-      else
-        html += @tab.title.charAt(i)
+    html+= @tab.title
     html+= '</span>'
     html+= '<div class="url">'
-    matchIndex = 0
-    for i in [0..@tab.url.length]
-      if @urlMatches? and @urlMatches[matchIndex] == i
-        html += "<b>#{@tab.url.charAt(i)}</b>"
-        matchIndex++
-      else
-        html += @tab.url.charAt(i)
+    html+= @tab.url
     html+= '</div></div>'
-    html += '</li>'
+    html+= '</li>'
 
 class TabListView
   constructor: (element) ->
@@ -91,7 +58,9 @@ class TabListView
     for tabView in @tabViews then @element().append tabView.render()
 
   update: (candidates)->
-    @tabViews = for candidate in candidates then new TabView(candidate.tab or candidate, candidate.urlMatches,candidate.titleMatches)
+    @tabViews = for candidate in candidates 
+      new TabView(candidate.tab or candidate)
+
     @render()
 
 class Application
@@ -132,9 +101,6 @@ class Application
     chrome.extension.sendRequest(message:"switchTab", target:tab)
 
   isKeyboardEventMatching: (event)->
-    console.log event
-    console.log @config_
-
     event.ctrlKey    == @config_.ctrlKey  &&
       event.altKey   == @config_.altKey   &&
       event.shiftKey == @config_.shiftKey &&
