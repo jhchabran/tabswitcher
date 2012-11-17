@@ -17,7 +17,6 @@ sortByMatchingScore = (tabs, abbrev)->
 
   results
 
-
 match = (string, abbrev)->
   score = 0.0
   count = 0

@@ -27,13 +27,20 @@ describe "Fuzzy tab matcher", ->
 
   describe "#match", -> 
     data = [
-      {url:"abc"   , hint:"a"   , score:1.0  , indexes:[0]} ,
-      {url:"abc"   , hint:"abc" , score:3.0  , indexes:[0   , 1 , 2]} ,
-      {url:"a_bc"  , hint:"abc" , score:2.75 , indexes:[0   , 2 , 3]} ,
-      {url:"ab_c"  , hint:"abc" , score:2.75 , indexes:[0   , 1 , 3]} ,
-      {url:"ab_c"  , hint:"abc" , score:2.75 , indexes:[0   , 1 , 3]} ,
-      {url:"a_b_c" , hint:"abc" , score:2.6  , indexes:[0   , 2 , 4]} ,
-      {url:"a__b_c" , hint:"abc" , score:2.5  , indexes:[0  , 3 , 5]} ,
+      # Basic
+      {url:"abc"          , hint:"a"   , score:1.0  , indexes:[0]} ,
+      {url:"abc"          , hint:"abc" , score:3.0  , indexes:[0   , 1 , 2]} ,
+      {url:"a_bc"         , hint:"abc" , score:2.75 , indexes:[0   , 2 , 3]} ,
+      {url:"ab_c"         , hint:"abc" , score:2.75 , indexes:[0   , 1 , 3]} ,
+      {url:"ab_c"         , hint:"abc" , score:2.75 , indexes:[0   , 1 , 3]} ,
+      {url:"a_b_c"        , hint:"abc" , score:2.6  , indexes:[0   , 2 , 4]} ,
+      {url:"a__b_c"       , hint:"abc" , score:2.5  , indexes:[0   , 3 , 5]} ,
+      {url:"__a__b__c___" , hint:"abc" , score:2.5  , indexes:[2   , 5 , 8]} ,
+
+      # Non matching
+      {url:"abc"          , hint:"acb" , score:0    , indexes:[]}  ,
+      {url:"__a__b__c"    , hint:"acb" , score:0    , indexes:[]}  ,
+      {url:"a__b_c"       , hint:"def" , score:0    , indexes:[]}  ,
     ]
 
     for d in data
