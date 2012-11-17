@@ -43,3 +43,9 @@ task 'watch', 'Build extension code into build/', ->
         console.log 'failed'
       console.log stdout
 
+task 'test', ->
+  if_coffee -> 
+    ps = spawn("jasmine-node", ["--coffee", "--verbose", "spec"])
+
+    ps.stdout.on("data", log)
+    ps.stderr.on("data", log)
