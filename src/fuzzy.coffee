@@ -19,39 +19,34 @@ sortByMatchingScore = (tabs, abbrev)->
 
 
 match = (string, abbrev)->
-  length = string.length
+  score = 0.0
+  count = 0
+  offset = 0
+  indexes = []
 
-  compute = (string, abbrev)->
-    console.log "going for #{string} with #{abbrev}"
-    score = 0.0
-    count = 0
-    offset = 0
-    indexes = []
+  for i in [0..abbrev.length-1]
+    for j in [offset..string.length-1]
+      if abbrev.charAt(i) == string.charAt(j)
+        # Last match in string
+        offset = j+1
 
-    for i in [0..length-1]
-      for j in [offset..abbrev.length-1]
-        if string.charAt(i) == abbrev.charAt(j)
-          # Last match in hint
-          offset = j
+        # Remember matches in the string
+        indexes.push j
 
-          # Remember matches in the string
-          indexes.push i
+        # Lower the score as far the last match is
+        score += (string.length - count)/string.length
 
-          # Lower the score as far the last match is
-          score += (length - count)/length
+        count = 0
 
-          count = 0
+        break
+      else
+        count++ if i > 0
 
-          break
-        else
-          count++ if j > 0
+  return {
+    score:score
+    indexes:indexes
+  }
 
-    return {
-      score:score
-      indexes:indexes
-    }
-
-  compute(string, abbrev)
 
 exports.sortByMatchingScore = sortByMatchingScore
 exports.match = match
