@@ -10,7 +10,7 @@ sortByMatchingScore = (tabs, abbrev)->
 
     if info?
       info.tab = tab
-      results.push info
+      results.push info if info.score > 0
 
   results.sort (a,b)->
     b.score - a.score
@@ -55,6 +55,9 @@ match = (string, abbrev, offset)->
   else
     {score:score, indexes:match_indexes}
 
-exports.sortByMatchingScore = sortByMatchingScore
-exports.match = match
-
+unless window?
+  exports.match = match
+  exports.sortByMatchingScore = sortByMatchingScore
+else 
+  window.sortByMatchingScore = sortByMatchingScore
+  window.removeProtocol = removeProtocol

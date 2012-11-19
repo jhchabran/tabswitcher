@@ -10,7 +10,7 @@
   "content_scripts": [
     {
     "matches": ["http://*/*", "https://*/*"],
-    "js": ["libs/zepto.js", "libs/liquidmetal.js","build/hook.js"],
+    "js": ["libs/zepto.js", "build/fuzzy.js","build/hook.js"],
     "css": ["style/main.css"]
     }
   ],

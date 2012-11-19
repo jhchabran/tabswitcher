@@ -8,38 +8,11 @@ OVERLAY_HTML= """
     </div>
   </div>
 """
-
-
-fuzzyMatch = (string, abbrev)->
-  string = string.toLowerCase()
-  abbrev = abbrev.toLowerCase()
-
-  for string_idx in [0..string.length]
-    for abbrev_idx in [0..abbrev.length]
-      if string.charAt(string_idx) == abbrev.charAt(abbrev_idx)
-        distance = i - last_string_idx
-
-
-# TODO : weight differently occurences depending if they
-#        are in domain, path or even GET parameters
-fuzzy = (tabs, hint)->
-  results = []
-
-  for tab in tabs
-    score = LiquidMetal.score(removeProtocol(tab.url), hint)
-    #console.log "#{tab.url}:#{score}"
-    results.push {tab:tab, score:score}
-
-  results.sort (a,b)->
-    b.score - a.score
-
-  console.log results
-
-  results
-
 class TabView
-  constructor: (tab)->
+  constructor: (tab, indexes)->
     @tab = tab
+    @url = removeProtocol(@tab.url) 
+    @indexes = indexes
 
   render: ->
     html = '<li>'
@@ -48,8 +21,16 @@ class TabView
     html+= '<span class="title">'
     html+= @tab.title
     html+= '</span>'
+
     html+= '<div class="url">'
-    html+= @tab.url
+    j = 0
+    for i in [0..@url.length]
+      if @indexes? && @indexes[j] == i
+        html += "<b>#{@url.charAt(i)}</b>"
+        j++
+      else
+        html += @url.charAt(i)
+
     html+= '</div></div>'
     html+= '</li>'
 
@@ -66,7 +47,7 @@ class TabListView
 
   update: (candidates)->
     @tabViews = for candidate in candidates 
-      new TabView(candidate.tab or candidate)
+      new TabView(candidate.tab or candidate, candidate.indexes)
 
     @render()
 
@@ -87,7 +68,7 @@ class Application
     @tabs_
 
   onInput: (event)->
-    candidates = fuzzy(@tabs(), event.target.value)
+    candidates = sortByMatchingScore(@tabs(), event.target.value)
 
     @tabListView.update candidates
 
