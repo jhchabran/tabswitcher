@@ -45,6 +45,8 @@ describe "Fuzzy tab matcher", ->
       # Pick the right match
       {url:"abc__a_b_c"      , hint:"abc" , score:3.0    , indexes:[0,1,2]}  ,
       {url:"a__b__c__abc"    , hint:"abc" , score:3.0    , indexes:[9,10,11]}  ,
+      {url:"abc__a_b_c_"     , hint:"abc" , score:3.0    , indexes:[0,1,2]}  ,
+      {url:"a__b__c__a_b_c_abc", hint:"abc" , score:3.0    , indexes:[15,16,17]}  ,
     ]
 
     for d in data
