@@ -18,33 +18,43 @@ sortByMatchingScore = (tabs, abbrev)->
   results
 
 match = (string, abbrev)->
-  score = 0.0
-  count = 0
-  offset = 0
-  indexes = []
+  compute = (s, a, index)->
+    console.log "-> #{s} vs #{a}, #{index}"
+    score = 0.0
+    count = 0
+    offset = 0
+    indexes = []
+    next_match = undefined
 
-  for i in [0..abbrev.length-1]
-    for j in [offset..string.length-1]
-      if abbrev.charAt(i) == string.charAt(j)
-        # Last match in string
-        offset = j+1
+    for i in [0..s.length-1]
+      for j in [offset..a.length-1]
+        if s.charAt(i) == a.charAt(j)
+          # Last match in s
+          offset = i+1
 
-        # Remember matches in the string
-        indexes.push j
+          # Remember matches in the s
+          indexes.push i + index
 
-        # Lower the score as far the last match is
-        score += (string.length - count)/string.length
+          # Lower the score as far the last match is
+          score += (s.length - count)/s.length
 
-        count = 0
+          count = 0
 
-        break
-      else
-        count++ if i > 0
+          # We found a match, we iterate to the next char in the string
+          break
+        else
+          count++ if j > 0
 
-  return {
-    score:score
-    indexes:indexes
-  }
+      # If we find another possible match, compute its score
+      if j != 0 && s.charAt(i) == a.charAt(0) && !next_match
+        next_match = compute(s[i..s.length], a, i)
+
+    if next_match? && next_match.score > score
+      next_match
+    else
+      {score:score, indexes:indexes}
+    
+  compute(string,abbrev,0)
 
 
 exports.sortByMatchingScore = sortByMatchingScore
