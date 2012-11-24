@@ -6,7 +6,7 @@
   left: 0;
   background: rgba(0,0,0,0.8);
   -webkit-user-select: none;
-  z-index: 100;
+  z-index: 9000;
 }
 
 #tabswitcher-overlay #box {
