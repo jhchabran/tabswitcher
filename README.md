@@ -7,8 +7,9 @@ in Ctrlp.vim.
 ## Usage 
 
 If you just want to install the plugin, just go to the [chrome
-store](https://chrome.google.com/webstore/detail/tabswitcher/gkdkligmcadfbagoeggeohelmgalchcn). If
-you want to test the latest code :
+store](https://chrome.google.com/webstore/detail/tabswitcher/gkdkligmcadfbagoeggeohelmgalchcn). Default hotkey is **ctrl-k**.
+
+If you want to test the latest code :
 
 - clone this repository
 - run `cake build` to output Javascript for Coffeescript files
