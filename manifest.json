@@ -1,6 +1,6 @@
 {
   "name": "TabSwitcher",
-  "version": "0.3",
+  "version": "0.31",
   "manifest_version":2,
   "description": "Switch to another tab easily, like you would do in Textmate",
   "browser_action": {
