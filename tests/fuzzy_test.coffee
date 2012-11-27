@@ -1,4 +1,5 @@
 f = require '../src/fuzzy'
+should = require 'should'
 
 mock_tabs = (urls)->
   tabs = []
@@ -7,13 +8,13 @@ mock_tabs = (urls)->
 
   tabs
 
-describe "Fuzzy tab matcher", ->
-  describe "#sortByMatchingScore", ->
+describe "Fuzzy", ->
+  describe ".sortByMatchingScore", ->
     it "should not match against url's protocol", ->
       tabs = mock_tabs ["http://foo","http://h_t_t_p.com","http://github.com"]
       results = f.sortByMatchingScore tabs, "http"
 
-      expect(results[0].tab.url).toEqual(tabs[1].url)
+      results[0].tab.url.should.eql(tabs[1].url)
 
     it "should sort tabs by their score", ->
       tabs = mock_tabs ["axxbxxcxx", "axxbxcx", "axbxcx", "abc"]
@@ -23,9 +24,9 @@ describe "Fuzzy tab matcher", ->
       for result in results
         scores.push result.score
 
-      expect(scores).toEqual(scores.sort (a,b)-> b-a)
+      scores.should.eql(scores.sort (a,b)-> b-a)
 
-  describe "#match", -> 
+  describe ".match", -> 
     data = [
       # Basic
       {url:"abc"                     , hint:"a"   , score:1.0                   , indexes:[0]} ,
@@ -53,13 +54,21 @@ describe "Fuzzy tab matcher", ->
       {url:"a___b__c__a__b__c_a_b_c" , hint:"abc" , score:(1+22/23.0+22/23.0)   , indexes:[18  , 20 , 22]} ,
     ]
 
+    for d in data
+      r = f.match(d.url, d.hint)
+
+      it "should score #{d.score} for #{d.hint} against #{d.url}", ->
+        r.score.should.eql(d.score)
+      it "should find indexes #{d.indexes} for #{d.hint} against #{d.url}", ->
+        r.indexes.should.eql(d.indexes)
+
     # It seems I got an issue with jasmine and maybe coffeescript, iterating 
     # on d through data with the it block inside the for loop draw 
     # false positives because of some weird border effect.
     #
     # This isn't elegant but at least it computes the tests correctly.
-    it "should match precomputed data", ->
-      for d in data
-        r = f.match(d.url, d.hint)
-        expect(r.score).toEqual(d.score)
-        expect(r.indexes).toEqual(d.indexes)
+    #it "should match precomputed data", ->
+    #  for d in data
+    #    r = f.match(d.url, d.hint)
+    #    expect(r.score).toEqual(d.score)
+    #    expect(r.indexes).toEqual(d.indexes)
