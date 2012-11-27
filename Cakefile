@@ -45,7 +45,7 @@ task 'watch', 'Build extension code into build/', ->
 
 task 'test', ->
   if_coffee -> 
-    ps = spawn("jasmine-node", ["--coffee", "--verbose", "spec"])
+    ps = spawn("mocha", ["--compilers", "coffee:coffee-script", "tests/"])
 
     ps.stdout.on("data", log)
     ps.stderr.on("data", log)
