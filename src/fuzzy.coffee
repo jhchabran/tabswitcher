@@ -55,7 +55,9 @@ match = (string, abbrev, offset)->
   else
     {score:score, indexes:match_indexes}
 
-unless window?
+isCommonJS = typeof(window) == "undefined"
+
+if isCommonJS
   exports.match = match
   exports.sortByMatchingScore = sortByMatchingScore
 else 
