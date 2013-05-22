@@ -12,6 +12,9 @@ store](https://chrome.google.com/webstore/detail/tabswitcher/gkdkligmcadfbagoegg
 If you want to test the latest code :
 
 - clone this repository
+- run ``cd tabswitcher``
+- run ``npm install coffee-script -g`` 
+- run ``npm install mocha should`` 
 - run `cake build` to output Javascript for Coffeescript files
 - open Chrome's extension tab 
 - click "Load unpacked extension"
@@ -20,6 +23,4 @@ If you want to test the latest code :
 ## TODO
 
 - Go to any match by clicking on it or navigating with arrows ( or ctrl-j / ctrl-k ? )
-- Refactor around the fuzzy algorithm, the protocal handling isn't very
-  elegant.
 
