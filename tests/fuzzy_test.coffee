@@ -61,14 +61,3 @@ describe "Fuzzy", ->
         r.score.should.eql(d.score)
       it "should find indexes #{d.indexes} for #{d.hint} against #{d.url}", ->
         r.indexes.should.eql(d.indexes)
-
-    # It seems I got an issue with jasmine and maybe coffeescript, iterating 
-    # on d through data with the it block inside the for loop draw 
-    # false positives because of some weird border effect.
-    #
-    # This isn't elegant but at least it computes the tests correctly.
-    #it "should match precomputed data", ->
-    #  for d in data
-    #    r = f.match(d.url, d.hint)
-    #    expect(r.score).toEqual(d.score)
-    #    expect(r.indexes).toEqual(d.indexes)
