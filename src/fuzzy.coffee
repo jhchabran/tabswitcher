@@ -4,21 +4,20 @@ removeProtocol = (url)->
 
 sortByMatchingScore = (tabs, abbrev)->
   results = []
-
-  for tab in tabs
-    info = match(removeProtocol(tab.url), abbrev)
-
-    if info?
-      info.tab = tab
-      results.push info if info.score > 0
-
-  results.sort (a,b)->
-    b.score - a.score
-
-  # If we didn't get any matches, display all tabs
-  unless results.length > 0
+  
+  if abbrev == ""
     for tab in tabs
-      results.push score:0, match_indexes:[]
+      results.push tab:tab, score:0, match_indexes:[]
+  else
+    for tab in tabs
+      info = match(removeProtocol(tab.url), abbrev)
+
+      if info?
+        info.tab = tab
+        results.push info if info.score > 0
+
+        results.sort (a,b)->
+          b.score - a.score
 
   results
 
