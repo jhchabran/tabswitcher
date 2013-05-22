@@ -15,7 +15,14 @@ sortByMatchingScore = (tabs, abbrev)->
   results.sort (a,b)->
     b.score - a.score
 
+  # If we didn't get any matches, display all tabs
+  unless results.length > 0
+    for tab in tabs
+      results.push score:0, match_indexes:[]
+
   results
+
+
 
 match = (string, abbrev, offset)->
   score = 0.0
