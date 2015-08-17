@@ -5,6 +5,4 @@
   (:require-macros [cljs.core.async.macros :refer [go]]))
 
 (defn init []
-  (let [bg (runtime/connect)]
-    (go (>! bg :lol-i-am-a-content-script)
-        (console/log "Background said: " (<! bg)))))
+  nil)
