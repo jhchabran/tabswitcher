@@ -1,0 +1,1 @@
+tabswitcher.popup.init();
