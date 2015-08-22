@@ -2,25 +2,24 @@
   (:require [khroma.runtime :as runtime]
             [khroma.log :as console]
             [cljs.core.async :refer [>! <!]]
-            [reagent.core :as reagent :refer [atom]])
-  (:require-macros [cljs.core.async.macros :refer [go]]))
+            [reagent.core :as r]
+            [re-frame.core :refer [dispatch dispatch-sync]]
 
-(def app-db (atom []))
+            [tabswitcher.handlers]
+            [tabswitcher.views :as views]
+            [tabswitcher.subs])
+
+  (:require-macros [cljs.core.async.macros :refer [go]]
+                   [reagent.ratom :refer [reaction]]))
 
 (defn init []
   (let [bg (runtime/connect)]
+    (dispatch-sync [:initialize-db])
     (go
       (>! bg :tabs)
       (let [tabs (<! bg)]
-        (reset! app-db (js->clj tabs))
-        (console/log "asking for tabs")
+        (dispatch [:update tabs])
         (console/log tabs))))
 
-  (reagent/render-component [some-component]
-                            (.getElementById js/document "app")))
-
-(defn some-component []
-  [:div
-   [:h3 "I am a tabswitcher"]
-   [:p.someclass 
-    "I have found " [:strong (count @app-db)] " tabs"]])
+  (r/render-component [views/app]
+                      (.getElementById js/document "app")))

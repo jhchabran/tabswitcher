@@ -5,8 +5,10 @@
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [org.clojure/clojurescript "0.0-3297"]
                  [org.clojure/core.async "0.1.346.0-17112a-alpha"]
+                 [clj-fuzzy "0.3.1"]
                  [khroma "0.0.2"]
-                 [reagent "0.5.0"]]
+                 [reagent "0.5.0"]
+                 [re-frame "0.4.1"]]
 
   :source-paths ["src"]
 
