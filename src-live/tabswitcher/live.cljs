@@ -70,7 +70,8 @@
            :width 1297
            :windowId 336}]
    :results []
-   :query ""})
+   :query ""
+   :selection 0})
 
 (register-handler
   :initialize-fake-db

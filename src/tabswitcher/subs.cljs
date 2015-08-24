@@ -11,3 +11,8 @@
   :results
   (fn [db _]
     (reaction (:results @db))))
+
+(register-sub
+  :selection
+  (fn [db _]
+    (reaction (:selection @db))))

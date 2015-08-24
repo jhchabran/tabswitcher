@@ -23,14 +23,12 @@
 (register-handler
   :next-result
   (fn [db _]
-    (.log js/console "next-result")
-    db))
+    (update db :selection inc)))
 
 (register-handler
   :previous-result
   (fn [db _]
-    (.log js/console "previous-result")
-    db))
+    (update db :selection dec)))
 
 (defn fuzzy-find [tabs query]
   (reverse (sort-by #(f/dice (:title %) query) tabs)))
@@ -38,7 +36,5 @@
 (register-handler
   :filter
   (fn [db [_ query]]
-    (let [sorted-tabs (fuzzy-find (:tabs db) query)
-          wrap        (fn [tab] {:chrome tab :selected false})]
-
-      (merge db {:query query} {:results (map wrap sorted-tabs)}))))
+    (let [sorted-tabs (fuzzy-find (:tabs db) query)]
+      (merge db {:query query :results sorted-tabs :selection 0}))))

@@ -10,18 +10,20 @@
                          (dispatch [:filter
                                     (-> event .-target .-value)]))}]])
 
-(defn result-item [result]
+(defn result-item [idx result selection]
   [:li.result-item
    {:on-click #(dispatch [:jump-to result])
-    :class (when (:selected result) "selected")}
-   (-> result :chrome :title)])
+    :class (when (= idx selection) "selected")}
+   (:title result)])
 
-(defn results-list [results]
+(defn results-list [results selection]
   (into [:ul]
-        (map result-item results)))
+        (map-indexed #(result-item %1 %2 selection) results)))
 
 (defn app []
-  (let [results (subscribe [:results])]
+  (let [results   (subscribe [:results])
+        selection (subscribe [:selection])]
+
     (r/create-class
       {:display-name
        "tabswitcher-name"
@@ -31,7 +33,7 @@
           [:h3 "Tabswitcher"]
           [query-input]
           [:p "Found " (count @results) " tabs"]
-          [results-list @results]])
+          [results-list @results @selection]])
        :component-did-mount
        (fn []
          (kb/bind! "alt-j" ::next-result #(dispatch [:next-result]))
