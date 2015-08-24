@@ -13,9 +13,9 @@
   :source-paths ["src"]
 
   :cljsbuild {:builds [{:id "live"
-                        :source-paths ["src"]
+                        :source-paths ["src" "src-live"]
                         :figwheel true
-                        :compiler {:main tabswitcher.popup
+                        :compiler {:main tabswitcher.live
                                    :asset-path "js/compiled/out"
                                    :output-to "resources/public/js/compiled/tabswitcher.js"
                                    :output-dir "resources/public/js/compiled/out"

@@ -23,9 +23,3 @@
 
   (r/render-component [views/app]
                       (.getElementById js/document "app")))
-
-(defn live-init []
-  (dispatch-sync [:initialize-mocked-db])
-  (dispatch [:filter ""])
-  (r/render-component [views/app]
-                      (.getElementById js/document "app")))
