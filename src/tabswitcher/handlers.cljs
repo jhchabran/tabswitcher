@@ -10,11 +10,6 @@
     db/default-db))
 
 (register-handler
-  :initialize-mocked-db
-  (fn [_ _]
-    db/fake-db))
-
-(register-handler
   :update
   (fn [db [_ tabs]]
     (assoc db :tabs (w/keywordize-keys (js->clj tabs)))))
