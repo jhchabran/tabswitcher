@@ -12,7 +12,7 @@
 (defn results-list [results]
   (into [:ul]
         (map (fn [r]
-               [:li (get r "title")]) results)))
+               [:li (:title r)]) results)))
 
 (defn app []
   (let [results (subscribe [:results])]

@@ -1,5 +1,6 @@
 (ns tabswitcher.handlers
-  (:require [re-frame.core :refer [register-handler dispatch]]
+  (:require [clojure.walk :as w]
+            [re-frame.core :refer [register-handler dispatch]]
             [clj-fuzzy.metrics :as f]
             [tabswitcher.db :as db]))
 
@@ -9,12 +10,17 @@
     db/default-db))
 
 (register-handler
+  :initialize-mocked-db
+  (fn [_ _]
+    db/fake-db))
+
+(register-handler
   :update
   (fn [db [_ tabs]]
-    (assoc db :tabs (js->clj tabs))))
+    (assoc db :tabs (w/keywordize-keys (js->clj tabs)))))
 
 (defn fuzzy-find [tabs query]
-  (reverse (sort-by #(f/dice (get % "title") query) tabs)))
+  (reverse (sort-by #(f/dice (:title %) query) tabs)))
 
 (register-handler
   :filter
