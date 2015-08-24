@@ -23,12 +23,19 @@
 (register-handler
   :next-result
   (fn [db _]
-    (update db :selection inc)))
+    (let [boundary  (count (:results db))
+          selection (:selection db)]
+      (if (< selection (- boundary 1))
+        (update db :selection inc)
+        db))))
 
 (register-handler
   :previous-result
   (fn [db _]
-    (update db :selection dec)))
+    (let [selection (:selection db)]
+      (if (> selection 0)
+        (update db :selection dec)
+        db))))
 
 (defn fuzzy-find [tabs query]
   (reverse (sort-by #(f/dice (:title %) query) tabs)))
