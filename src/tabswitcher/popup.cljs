@@ -15,6 +15,8 @@
 (defn init []
   (let [bg (runtime/connect)]
     (dispatch-sync [:initialize-db])
+    (dispatch [:filter ""])
+
     (go
       (>! bg :tabs)
       (let [tabs (<! bg)]

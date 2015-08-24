@@ -1,0 +1,6 @@
+body {
+  background: #EEE;
+}
+li.selected {
+  background: #DDD;
+}

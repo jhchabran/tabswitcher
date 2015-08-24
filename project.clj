@@ -5,6 +5,7 @@
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [org.clojure/clojurescript "0.0-3297"]
                  [org.clojure/core.async "0.1.346.0-17112a-alpha"]
+                 [keybind "1.0.0"]
                  [clj-fuzzy "0.3.1"]
                  [khroma "0.0.2"]
                  [reagent "0.5.0"]
@@ -40,7 +41,10 @@
   :profiles {:live  {:plugins [[lein-figwheel "0.3.5"]]}
              :dev   {:plugins [[com.cemerick/austin "0.1.3"]
                                [lein-cljsbuild "1.0.5"]
-                               [lein-chromebuild "0.2.1"]]}
+                               [lein-chromebuild "0.2.1"]]
+
+                     :chromebuild {:resource-paths ["resources/js" "resources/html" "resources/images" "resources/css"]
+                                   :target-path "target-unpacked"}}
              :min   {:plugins [[lein-cljsbuild "1.0.5"]
                                [lein-chromebuild "0.2.1"]]}}
   :figwheel {
@@ -48,7 +52,7 @@
              :server-port 3000 ;; default
              :server-ip "0.0.0.0" 
 
-             ;:css-dirs ["resources/public/css"] ;; watch and update CSS
+             :css-dirs ["resources/public/css"] ;; watch and update CSS
 
              ;; Start an nREPL server into the running figwheel process
              :nrepl-port 7888

@@ -11,11 +11,6 @@
   (r/render-component [views/app]
                       (.getElementById js/document "app")))
 
-(register-handler
-  :initialize-fake-db
-  (fn [_ _]
-    fake-db))
-
 (def fake-db
   {:tabs [
           {:active false
@@ -76,3 +71,8 @@
            :windowId 336}]
    :results []
    :query ""})
+
+(register-handler
+  :initialize-fake-db
+  (fn [_ _]
+    fake-db))
