@@ -6,9 +6,11 @@
 (defn query-input []
   [:div#query
    [:input {:type "text"
-            :on-key-up (fn [event]
-                         (dispatch [:filter
-                                    (-> event .-target .-value)]))}]])
+            :on-key-press (fn [event]
+                         (if (.-altKey event)
+                           (.preventDefault event)
+                           (dispatch [:filter
+                                      (-> event .-target .-value)])))}]])
 
 (defn result-item [idx result selection]
   [:li.result-item
