@@ -20,6 +20,7 @@
     (go
       (>! bg :tabs)
       (let [tabs (<! bg)]
+        (dispatch [:assign-bg-chan bg])
         (dispatch [:update tabs])
         (console/log tabs))))
 
