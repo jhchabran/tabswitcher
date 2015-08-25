@@ -11,6 +11,15 @@
   (r/render-component [views/app]
                       (.getElementById js/document "app")))
 
+; Overwrite jump handler so we can see it working when
+; working on popup.cljs live instead of as an extension,
+(register-handler
+  :jump
+  (fn [db [_ tab]]
+    (.log js/console "handler :jump called")
+    (.log js/console tab)
+    db))
+
 (def fake-db
   {:tabs [
           {:active false

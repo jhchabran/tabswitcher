@@ -15,9 +15,9 @@
     (assoc db :tabs (w/keywordize-keys (js->clj tabs)))))
 
 (register-handler
-  :jump-to
+  :jump
   (fn [db [_ tab]]
-    (.log js/console tab)
+    
     db))
 
 (register-handler

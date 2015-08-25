@@ -7,14 +7,14 @@
   [:div#query
    [:input {:type "text"
             :on-key-press (fn [event]
-                         (if (.-altKey event)
-                           (.preventDefault event)
-                           (dispatch [:filter
-                                      (-> event .-target .-value)])))}]])
+                            (if (or (.-altKey event) (= (.-keyCode event) 13)) ; 13 = Enter
+                              (.preventDefault event)
+                              (dispatch [:filter
+                                         (-> event .-target .-value)])))}]])
 
 (defn result-item [idx result selection]
   [:li.result-item
-   {:on-click #(dispatch [:jump-to result])
+   {:on-click #(dispatch [:jump result])
     :class (when (= idx selection) "selected")}
    (:title result)])
 
@@ -39,5 +39,5 @@
        :component-did-mount
        (fn []
          (kb/bind! "alt-j" ::next-result #(dispatch [:next-result]))
-         (kb/bind! "alt-k" ::next-result #(dispatch [:previous-result]))
-         )})))
+         (kb/bind! "alt-k" ::previous-result #(dispatch [:previous-result]))
+         (kb/bind! "return" ::jump #(dispatch [:jump])))})))
