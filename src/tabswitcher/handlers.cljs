@@ -2,12 +2,20 @@
   (:require [clojure.walk :as w]
             [re-frame.core :refer [register-handler dispatch]]
             [clj-fuzzy.metrics :as f]
+            [cljs.core.async :as async]
             [tabswitcher.db :as db]))
 
 (register-handler
   :initialize-db
   (fn [_ _]
     db/default-db))
+
+; TODO may be merged with initialise db since we can't really do 
+; anything without this.
+(register-handler
+  :assign-bg-chan
+  (fn [db [_ bg-chan]]
+    (assoc db :background-chan bg-chan)))
 
 (register-handler
   :update
@@ -17,7 +25,9 @@
 (register-handler
   :jump
   (fn [db [_ tab]]
-    
+    (let [bg  (:background-chan db)
+          tab (nth (:results db) (:selection db))]
+      (async/put! bg [:jump (:id tab)]))
     db))
 
 (register-handler

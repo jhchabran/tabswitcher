@@ -2,19 +2,23 @@
   (:require [khroma.log :as console]
             [khroma.runtime :as runtime]
             [cljs.core.async :refer [>! <!] :as async])
-  (:require-macros [cljs.core.async.macros :refer [go-loop]]))
+  (:require-macros [cljs.core.async.macros :refer [go go-loop]]))
 
 (defn init []
-  (go-loop
-    []
-    (let [conns (runtime/connections)
-          content (<! conns)
-          message (<! content)]
-      (condp message
-        :tabs
+  (go-loop [conns (runtime/connections)
+            content (<! conns)]
+
+    (let [[message & args] (<! content)]
+      (console/log "Content script said: " message)
+      ; keywords ends as a string there, need to read khroma
+      (condp = message
+        "tabs"
         (.query js/chrome.tabs #js {:currentWindow true}
                 (fn [result]
-                  ( async/put! content result))))
-
-      (console/log "Content script said: " message)
-      (recur))))
+                  (async/put! content result)))
+        "jump"
+        (let [tab-id (first args)]
+          (.update js/chrome.tabs tab-id #js {:highlighted true}))
+        nil
+        (recur conns (<! conns)))
+      (recur conns content))))
