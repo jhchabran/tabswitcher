@@ -6,19 +6,19 @@
 
 (defn init []
   (go-loop [conns (runtime/connections)
-            content (<! conns)]
+            popup (<! conns)]
 
-    (let [[message & args] (<! content)]
-      (console/log "Content script said: " message)
+    (let [[message & args] (<! popup)]
+      (console/log "popup script said: " message)
       ; keywords ends as a string there, need to read khroma
       (condp = message
         "tabs"
         (.query js/chrome.tabs #js {:currentWindow true}
                 (fn [result]
-                  (async/put! content result)))
+                  (async/put! popup result)))
         "jump"
         (let [tab-id (first args)]
           (.update js/chrome.tabs tab-id #js {:highlighted true}))
         nil
         (recur conns (<! conns)))
-      (recur conns content))))
+      (recur conns popup))))
