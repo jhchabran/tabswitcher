@@ -20,8 +20,7 @@
       (>! bg [:tabs])
       (let [tabs (<! bg)]
         (dispatch [:assign-bg-chan bg])
-        (dispatch [:update tabs])
-        (console/log tabs))))
+        (dispatch [:update tabs]))))
 
   (r/render-component [views/app]
                       (.getElementById js/document "app")))
