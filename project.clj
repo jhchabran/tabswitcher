@@ -13,35 +13,25 @@
 
   :source-paths ["src"]
 
-  :cljsbuild {:builds [{:id "live"
-                        :source-paths ["src" "src-live"]
-                        :figwheel true
-                        :compiler {:main tabswitcher.live
-                                   :asset-path "js/compiled/out"
-                                   :output-to "resources/public/js/compiled/tabswitcher.js"
-                                   :output-dir "resources/public/js/compiled/out"
-                                   :source-map-timestamp true}}
+  :profiles {:live  {:plugins [[lein-figwheel "0.3.5"]
+                               [lein-cljsbuild "1.0.5"]]
+                     :cljsbuild {:builds [{:source-paths ["src" "src-live"]
+                                           :figwheel true
+                                           :compiler {:main tabswitcher.live
+                                                      :asset-path "js/compiled/out"
+                                                      :output-to "resources/public/js/compiled/tabswitcher.js"
+                                                      :output-dir "resources/public/js/compiled/out"
+                                                      :source-map-timestamp true}}]}}
 
-                       {:id "dev"
-                        :source-paths ["src"]
-                        :compiler {:output-to "target/unpacked/tabswitcher.js"
-                                   :output-dir "target/js"
-                                   :optimizations :whitespace
-                                   :pretty-print true}}
-
-                       ;{:id "min"
-                       ; :source-paths ["src"]
-                       ; :compiler {:output-to "target/unpacked/tabswitcher.js"
-                       ;            :output-dir "target/js"
-                       ;            :optimizations :advanced
-                       ;            :pretty-print false}}
-                       ]}
-
-
-  :profiles {:live  {:plugins [[lein-figwheel "0.3.5"]]}
              :dev   {:plugins [[com.cemerick/austin "0.1.3"]
                                [lein-cljsbuild "1.0.5"]
                                [lein-chromebuild "0.2.1"]]
+                     :cljsbuild {:builds [{:id "dev"
+                                           :source-paths ["src"]
+                                           :compiler {:output-to "target/unpacked/tabswitcher.js"
+                                                      :output-dir "target/js"
+                                                      :optimizations :whitespace
+                                                      :pretty-print true}}]}
 
                      :chromebuild {:resource-paths ["resources/js" "resources/html" "resources/images" "resources/css"]
                                    :target-path "target-unpacked"}}
