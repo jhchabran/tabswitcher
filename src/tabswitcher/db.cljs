@@ -3,5 +3,5 @@
 (def default-db
   {:tabs    []
    :results []
-   :query ""})
+   :query nil})
 

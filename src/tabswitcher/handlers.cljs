@@ -20,6 +20,10 @@
 (register-handler
   :update
   (fn [db [_ tabs]]
+    ; Display tabs for the first run
+    (if (nil? (:query db))
+      (dispatch [:filter ""]))
+
     (assoc db :tabs (w/keywordize-keys (js->clj tabs)))))
 
 (register-handler
