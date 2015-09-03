@@ -30,8 +30,9 @@
   :jump
   (fn [db [_ tab]]
     (let [bg  (:background-chan db)
-          tab (nth (:results db) (:selection db))]
-      (async/put! bg [:jump (:id tab)]))
+          tab-id (:id (nth (:results db) (:selection db)))]
+
+      (async/put! bg [:jump tab-id (map :id (:tabs db))]))
     db))
 
 (register-handler
