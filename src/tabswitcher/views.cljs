@@ -16,6 +16,7 @@
   [:li.result-item
    {:on-click #(dispatch [:jump result])
     :class (when (= idx selection) "selected")}
+    [:img.favicon {:src "/images/icon-search.svg"}]
    (:title result)])
 
 (defn results-list [results selection]
@@ -32,10 +33,10 @@
        :reagent-render
        (fn []
          [:div
-          [:h3 "Tabswitcher"]
           [query-input]
-          [:p "Found " (count @results) " tabs"]
-          [results-list @results @selection]])
+          [:p.results-count "Found " (count @results) " tabs"]
+          [results-list @results @selection]
+          [:h3 "tabswitcher"]])
        :component-did-mount
        (fn []
          (kb/bind! "alt-j" ::next-result #(dispatch [:next-result]))
