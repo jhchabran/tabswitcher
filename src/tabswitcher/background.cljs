@@ -16,9 +16,15 @@
         (.query js/chrome.tabs #js {:currentWindow true}
                 (fn [result]
                   (async/put! popup result)))
+
         "jump"
-        (let [tab-id (first args)]
-          (.update js/chrome.tabs tab-id #js {:highlighted true}))
+        (let [[tab-id tab-ids] args]
+          ; Jump onto targeted tab
+          (.update js/chrome.tabs tab-id #js {:highlighted true})
+          ; Deselect everyone
+          (doseq [id tab-ids]
+            (.update js/chrome.tabs id #js {:highlighted false})))
+
         nil
         (recur conns (<! conns)))
       (recur conns popup))))

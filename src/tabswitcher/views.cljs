@@ -1,7 +1,7 @@
 (ns tabswitcher.views
   (:require [reagent.core :as r]
-            [keybind :as kb]
-            [re-frame.core :refer [subscribe dispatch]]))
+            [re-frame.core :refer [subscribe dispatch]]
+            [tabswitcher.keybindings :as kb]))
 
 (defn query-input []
   [:div#query
@@ -37,8 +37,4 @@
           [:p.results-count "Found " (count @results) " tabs"]
           [results-list @results @selection]
           [:h3 "tabswitcher"]])
-       :component-did-mount
-       (fn []
-         (kb/bind! "alt-j" ::next-result #(dispatch [:next-result]))
-         (kb/bind! "alt-k" ::previous-result #(dispatch [:previous-result]))
-         (kb/bind! "return" ::jump #(dispatch [:jump])))})))
+       :component-did-mount kb/attach-global-bindings})))
