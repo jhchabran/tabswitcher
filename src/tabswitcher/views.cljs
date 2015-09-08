@@ -16,7 +16,7 @@
   [:li.result-item
    {:on-click #(dispatch [:jump result])
     :class (when (= idx selection) "selected")}
-    [:img.favicon {:src "/images/icon-search.svg"}]
+    [:img.favicon {:src (:favIconUrl result)}]
    (:title result)])
 
 (defn results-list [results selection]
