@@ -2,7 +2,7 @@ body {
   background: #F2F2F2;
   font-family: sans-serif;
   margin: 0;
-  width: 320px;
+  min-width: 320px;
 }
 
 ul, h3, p.results-count {
@@ -26,7 +26,7 @@ input {
     padding: 0.4em;	
     text-indent: 1.5em;    
     font-size: 1.5em;
-    background-image: url(/icon-search.svg);
+    background-image: url(/images/icon-search.svg);
 		background-repeat: no-repeat;
     background-position-x: 0.6em;
     background-position-y: 0.6em;
@@ -44,10 +44,9 @@ ul {
 li {
   list-style-type: none;
   line-height: 1.6em;
-  text-overflow: ellipsis;
   white-space: nowrap;
-  width: 100%;                   
-  overflow: hidden;  
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 li.selected {
