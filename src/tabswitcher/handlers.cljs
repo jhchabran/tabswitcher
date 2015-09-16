@@ -3,6 +3,7 @@
             [re-frame.core :refer [register-handler dispatch]]
             [clj-fuzzy.metrics :as f]
             [cljs.core.async :as async]
+            [tabswitcher.messaging :refer [send-background]]
             [tabswitcher.db :as db]))
 
 (register-handler
@@ -30,9 +31,9 @@
   :jump
   (fn [db [_ tab]]
     (let [bg  (:background-chan db)
-          tab-id (:id (nth (:results db) (:selection db)))]
-
-      (async/put! bg [:jump tab-id (map :id (:tabs db))]))
+          tab-id (:id (nth (:results db) (:selection db)))
+          other-ids (remove #(= tab-id %1) (map :id (:tabs db)))]
+      (send-background [:jump tab-id other-ids] #()))
     db))
 
 (register-handler

@@ -5,6 +5,7 @@
             [reagent.core :as r]
             [re-frame.core :refer [dispatch dispatch-sync]]
 
+            [tabswitcher.messaging :refer [send-background]]
             [tabswitcher.handlers]
             [tabswitcher.views :as views]
             [tabswitcher.subs])
@@ -13,14 +14,8 @@
                    [reagent.ratom :refer [reaction]]))
 
 (defn init []
-  (let [bg (runtime/connect)]
-    (dispatch-sync [:initialize-db])
-
-    (go
-      (>! bg [:tabs])
-      (let [tabs (<! bg)]
-        (dispatch [:assign-bg-chan bg])
-        (dispatch [:update tabs]))))
-
+  (dispatch-sync [:initialize-db])
+  (send-background [:tabs] #(dispatch [:update %1]))
   (r/render-component [views/app]
                       (.getElementById js/document "app")))
+
