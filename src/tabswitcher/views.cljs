@@ -6,18 +6,34 @@
 (defn query-input []
   [:div#query
    [:input {:type "text"
+            ; KeyUp is only used to catch backspace, keyPress catch the reset 
+            ; without bothering with unicode chars that gets entered while 
+            ; using alt + char.
+            :on-key-up    (fn [event]
+                            (if (= (.-keyCode event) 8)
+                              (dispatch [:filter (-> event .-target .-value)])))
             :on-key-press (fn [event]
-                            (if (or (.-altKey event) (= (.-keyCode event) 13)) ; 13 = Enter
+                            (if (or (.-altKey event) 
+                                    (= (.-keyCode event) 13)) ; 13 = Enter
                               (.preventDefault event)
                               (dispatch [:filter
-                                         (-> event .-target .-value)])))}]])
+                                         (str (-> event .-target .-value)
+                                              (.-key event))])))}]])
+
+(defn highlighted [{:keys [matches score text]}]
+  (let [indexes (mapv first matches)]
+    (reduce (fn [html [i c]]
+              (conj html (if (some #(= % i) indexes) [:b c] c)))
+            [:span]
+            (map-indexed vector text))))
 
 (defn result-item [idx result selection]
   [:li.result-item
    {:on-click #(dispatch [:jump result])
     :class (when (= idx selection) "selected")}
     [:img.favicon {:src (:favIconUrl result)}]
-   (:title result)])
+   (highlighted result)])
+
 
 (defn results-list [results selection]
   (into [:ul]

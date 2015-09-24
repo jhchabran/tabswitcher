@@ -1,8 +1,8 @@
 (ns tabswitcher.handlers
   (:require [clojure.walk :as w]
             [re-frame.core :refer [register-handler dispatch]]
-            [clj-fuzzy.metrics :as f]
             [cljs.core.async :as async]
+            [tabswitcher.fuzzy :as f]
             [tabswitcher.messaging :refer [send-background]]
             [tabswitcher.db :as db]))
 
@@ -53,11 +53,11 @@
         (update db :selection dec)
         db))))
 
-(defn fuzzy-find [tabs query]
-  (reverse (sort-by #(f/dice (:title %) query) tabs)))
-
 (register-handler
   :filter
   (fn [db [_ query]]
-    (let [sorted-tabs (fuzzy-find (:tabs db) query)]
+    (let [sorted-tabs (sort-by :score 
+                               #(compare %2 %1) 
+                               (map #(f/matcher (:title %1) query) 
+                                    (:tabs db)))]
       (merge db {:query query :results sorted-tabs :selection 0}))))
