@@ -30,8 +30,8 @@
 (register-handler
   :jump
   (fn [db [_ tab]]
-    (let [bg  (:background-chan db)
-          tab-id (:id (nth (:results db) (:selection db)))
+    (let [result (nth (:results db) (:selection db))
+          tab-id (-> result :tab :id)
           other-ids (remove #(= tab-id %1) (map :id (:tabs db)))]
       (send-background [:jump tab-id other-ids] #()))
     db))
@@ -58,6 +58,6 @@
   (fn [db [_ query]]
     (let [sorted-tabs (sort-by :score 
                                #(compare %2 %1) 
-                               (map #(f/matcher (:title %1) query) 
+                               (map #(f/matcher (:title %1) query {:tab %1}) 
                                     (:tabs db)))]
       (merge db {:query query :results sorted-tabs :selection 0}))))

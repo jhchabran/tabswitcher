@@ -30,7 +30,7 @@
                (+ score (/ 1 (- b a))))
         (float score)))))
 
-(defn matcher [text term]
+(defn matcher [text term & m]
   (let [matches (find-subseq text term)
         score   (score matches)]
-    {:matches matches :score score :text text}))
+    (merge {:matches matches :score score :text text} (first m))))

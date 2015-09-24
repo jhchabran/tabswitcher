@@ -14,7 +14,7 @@
                               (dispatch [:filter (-> event .-target .-value)])))
             :on-key-press (fn [event]
                             (if (or (.-altKey event) 
-                                    (= (.-keyCode event) 13)) ; 13 = Enter
+                                    (= (.-which event) 13)) ; 13 = Enter
                               (.preventDefault event)
                               (dispatch [:filter
                                          (str (-> event .-target .-value)
