@@ -3,6 +3,7 @@
             [re-frame.core :refer [register-handler dispatch]]
             [cljs.core.async :as async]
             [tabswitcher.fuzzy :as f]
+            [tabswitcher.utils :as u]
             [tabswitcher.messaging :refer [send-background]]
             [tabswitcher.db :as db]))
 
@@ -58,6 +59,6 @@
   (fn [db [_ query]]
     (let [sorted-tabs (sort-by :score 
                                #(compare %2 %1) 
-                               (map #(f/matcher (:title %1) query {:tab %1}) 
+                               (map #(f/matcher (u/format-result (:url %1)) query {:tab %1}) 
                                     (:tabs db)))]
       (merge db {:query query :results sorted-tabs :selection 0}))))

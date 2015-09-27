@@ -31,7 +31,7 @@
   [:li.result-item
    {:on-click #(dispatch [:jump result])
     :class (when (= idx selection) "selected")}
-    [:img.favicon {:src (:favIconUrl result)}]
+    [:img.favicon {:src (:favIconUrl (:tab result))}]
    (highlighted result)])
 
 
