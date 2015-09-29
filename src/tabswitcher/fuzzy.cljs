@@ -18,17 +18,26 @@
             matches
             []))))))
 
+; This needs some serious work and refactoring
 (defn- score [matches]
-  (loop [m (first matches)
-         r (rest matches)
-         score 0]
-    (let [a (first m)
-          b (ffirst r)]
-      (if b
-        (recur (first r)
-               (rest r)
-               (+ score (/ 1 (- b a))))
-        (float score)))))
+  (if (empty? matches)
+    0
+    (loop [m (first matches)
+           r (rest matches)
+           c (count matches)
+           score 0]
+      (let [a (first m)
+            b (ffirst r)]
+        (if b
+          (recur (first r)
+                 (rest r)
+                 c
+                 (+ score 
+                    (if (= (+ 1 a) b)
+                      (* 4 (/ 1 (- b a)))
+                      (/ 1 (- b a)))))
+          (+ (/ (- c (ffirst matches)) c)
+             (float score)))))))
 
 (defn matcher [text term & m]
   (let [matches (find-subseq text term)

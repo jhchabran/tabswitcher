@@ -47,7 +47,7 @@
            :selected false
            :status "complete"
            :title "Ruby"
-           :url "https://github.com"
+           :url "https://github.com/ruby/ruby"
            :width 1297
            :windowId 336}
           {:active false
@@ -61,7 +61,7 @@
            :selected false
            :status "complete"
            :title "Clojure"
-           :url "https://github.com"
+           :url "https://github.com/clojure/clojure"
            :width 1297
            :windowId 336}
           {:active false
@@ -75,7 +75,7 @@
            :selected false
            :status "complete"
            :title "Haskell"
-           :url "https://github.com"
+           :url "https://github.com/haskell/haskell"
            :width 1297
            :windowId 336}]
    :results []

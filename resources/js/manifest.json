@@ -1,6 +1,6 @@
 {
   "name": "tabswitcher",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "browser_action": {
     "default_title": "Show the popup",
     "default_popup": "popup.html",
