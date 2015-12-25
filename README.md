@@ -15,6 +15,9 @@ global shortcut. Set it at the [bottom of Chrome's exension
 page](chrome//extensions). Can't find it? [See
 here](http://i.imgur.com/mwOrF6i.png).
 
+Find it on [Google Chrome
+store](https://chrome.google.com/webstore/detail/tabswitcher/gkdkligmcadfbagoeggeohelmgalchcn).
+
 ## Privacy and performances
 
 No Javascript is injected in pages themselves. Everything is done
