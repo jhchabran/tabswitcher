@@ -64,6 +64,10 @@ To develop locally, two profiles are provided:
 
 Feel free to fork and open a pull-request !
 
+## Credits
+
+Icon being used by this extension uses is [Pull Tab by Chamaquito Pan de Dulce from the Noun Project](https://thenounproject.com/chamaquitopan/)
+
 ## License 
 
 [This project is licensed under the terms of the MIT license](LICENSE.md)
